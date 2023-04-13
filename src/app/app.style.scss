@@ -1,0 +1,31 @@
+romb-footer {
+    display: block;
+    position: relative;
+    width: 100%;
+    z-index: 1030;
+    color: white;
+
+  }
+  
+  ::ng-deep {
+    .selected-row {
+      background: rgba(48, 47, 47, .2);
+    }
+    .selectable-row {
+      &:hover {
+        background: rgba(48, 47, 47, .2);
+      }
+    }
+  }
+  
+  .edu-info-block {
+    text-align: center;
+    position: fixed;
+    z-index: 1035;
+    left: 20%;
+    right: 40%;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+  }
+  
