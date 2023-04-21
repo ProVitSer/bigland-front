@@ -1,0 +1,20 @@
+
+<div class="bg-img">
+  <div class="content">
+    <header>Вход в платформу</header>
+    <form  #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <div class="field">
+        <span class="fa fa-user"></span>
+        <input id="login" type="text" [(ngModel)]="user.login" name="login" required placeholder="Имя пользователя">
+      </div>
+      <div class="field space">
+        <span class="fa fa-lock"></span>
+        <input id="password" type="password" [(ngModel)]="user.password" name="password" required placeholder="Пароль">
+      </div>
+      <div class="field space">
+        <input type="submit" value="Войти в систему">
+      </div>
+    </form>
+  </div>
+</div>
+
