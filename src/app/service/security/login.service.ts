@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Jwt, StorageService } from './storage.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment.development';
 import { Observable, map } from 'rxjs';
+import { environment } from 'src/environments/environment.development';
 
 interface LoginData {
 	username: string;
@@ -19,16 +19,17 @@ export class LoginService {
 
 	constructor(private http: HttpClient, private router: Router) {
 		this.storageService = new StorageService();
-		this.URL_LOGIN = environment.URL_API + 'auth/apiToken';
+		this.URL_LOGIN = environment.URL_API + '/api/v2/auth/login';
 	}
 
 	login(loginData: LoginData): Observable<Jwt> {
-		return this.http.post<Jwt>(this.URL_LOGIN, loginData).pipe(
+		const result = this.http.post<Jwt>(this.URL_LOGIN, loginData).pipe(
 			map((user) => {
 				this.storageService.setCurrentUser(JSON.stringify(user));
 				return user;
 			}),
 		);
+		return result;
 	}
 
 	logout(): void {

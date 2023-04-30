@@ -5,8 +5,8 @@
     <form  (ngSubmit)="login()" [formGroup]="loginForm">
       <div class="field">
         <span class="fa fa-user"></span>
-        <input id="username" type="username" name="username" formControlName="username" required placeholder="Имя пользователя">
-        <div *ngIf="loginForm.controls['username'].hasError('required')" class="error-message"></div>
+        <input id="email" type="email" name="email" formControlName="email" required placeholder="Логин">
+        <div *ngIf="loginForm.controls['email'].hasError('required')" class="error-message"></div>
       </div>
       <div class="field space">
         <span class="fa fa-lock"></span>

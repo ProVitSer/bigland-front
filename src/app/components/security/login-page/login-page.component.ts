@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NotificationService } from 'src/app/core/services/notifications/notification.service';
-import { LoginService } from 'src/app/core/services/security/login.service';
+import { NotificationService } from 'src/app/service/notifications/notification.service';
+import { LoginService } from 'src/app/service/security/login.service';
 
 @Component({
 	selector: 'app-login',
@@ -21,15 +21,13 @@ export class LoginPageComponent implements OnInit {
 		private loginService: LoginService,
 	) {
 		this.loginForm = this.formBuilder.group({
-			username: ['', Validators.required],
+			email: ['', Validators.required],
 			password: ['', Validators.required],
 		});
 	}
 
-	// eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-	ngOnInit(): void {
-		//this.returnUrl = this.route.snapshot.queryParams['prevUrl'];
-	}
+	// eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method, @typescript-eslint/no-empty-function
+	ngOnInit(): void {}
 
 	login(): void {
 		if (this.loginForm.valid) {
@@ -38,12 +36,13 @@ export class LoginPageComponent implements OnInit {
 				() => {
 					this.onLoginSuccess();
 				},
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				(error: any) => {
 					this.onLoginFail(error);
 				},
 			);
 		} else {
-			this.notificationService.swalError('Поле Имя пользователя и пароль обязательны для заполнения');
+			this.notificationService.swalError('Поле Имя пользователя и Пароль обязательны для заполнения');
 		}
 	}
 
@@ -54,6 +53,7 @@ export class LoginPageComponent implements OnInit {
 		});
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	private onLoginFail(error: any): void {
 		this.loading = false;
 		if (error.status === undefined) {

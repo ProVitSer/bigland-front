@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { NotificationService } from './notifications/notification.service';
-import { errorNotification } from '../helpers/error-notification.helper';
+import { NotificationService } from '../notifications/notification.service';
+import { errorNotification } from '../../helpers/error-notification.helper';
 
 @Injectable()
 export abstract class ApiService<T> {
@@ -20,19 +20,22 @@ export abstract class ApiService<T> {
 			catchError((error) => {
 				return errorNotification(error.error, this.notificationService);
 			}),
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
 			tap((value: any) => {
-				this.notificationService.success(message ?? 'Se ha registrado');
+				this.notificationService.success(message ?? '');
 			}),
 		);
 	}
 
 	update(data: T, message?: string): Observable<T> {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		return this.httpClient.put<T>(this.fullUrl + (data as any).id, data).pipe(
 			catchError((error) => {
 				return errorNotification(error.error, this.notificationService);
 			}),
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
 			tap((value: any) => {
-				this.notificationService.success(message ?? 'Se ha actualizado');
+				this.notificationService.success(message ?? '');
 			}),
 		);
 	}
@@ -51,7 +54,7 @@ export abstract class ApiService<T> {
 				return errorNotification(error.error, this.notificationService);
 			}),
 			tap(() => {
-				this.notificationService.success(message ?? 'Se ha eliminado');
+				this.notificationService.success(message ?? '');
 			}),
 		);
 	}
