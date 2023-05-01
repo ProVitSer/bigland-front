@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from 'src/app/service/notifications/notification.service';
-import { LoginService } from 'src/app/service/security/login.service';
+import { LoginService } from 'src/app/service/security';
 
 @Component({
 	selector: 'app-login',
@@ -11,7 +11,7 @@ import { LoginService } from 'src/app/service/security/login.service';
 })
 export class LoginPageComponent implements OnInit {
 	loginForm: FormGroup;
-	private loading = false;
+	loading = false;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -32,15 +32,11 @@ export class LoginPageComponent implements OnInit {
 	login(): void {
 		if (this.loginForm.valid) {
 			this.loading = true;
-			this.loginService.login(this.loginForm.value).subscribe(
-				() => {
-					this.onLoginSuccess();
-				},
+			this.loginService.login(this.loginForm.value).subscribe({
+				next: () => this.onLoginSuccess(),
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				(error: any) => {
-					this.onLoginFail(error);
-				},
-			);
+				error: (e: any) => this.onLoginFail(e),
+			});
 		} else {
 			this.notificationService.swalError('Поле Имя пользователя и Пароль обязательны для заполнения');
 		}
@@ -48,8 +44,8 @@ export class LoginPageComponent implements OnInit {
 
 	private onLoginSuccess(): void {
 		this.loading = false;
-		this.router.navigate(['/']).then(() => {
-			this.notificationService.success('Сеанс успешно выполнен');
+		this.router.navigate(['/dashboard']).then(() => {
+			this.notificationService.swalSuccess('Сеанс успешно выполнен');
 		});
 	}
 
@@ -57,11 +53,11 @@ export class LoginPageComponent implements OnInit {
 	private onLoginFail(error: any): void {
 		this.loading = false;
 		if (error.status === undefined) {
-			this.notificationService.error('Произошла ошибка');
+			this.notificationService.swalError('Произошла ошибка');
 		} else if (error.status !== 0) {
-			this.notificationService.error(error.error.message);
+			this.notificationService.swalError(error.error.error);
 		} else {
-			this.notificationService.error('На данный момент нет подключения, попробуйте позже');
+			this.notificationService.swalError('На данный момент нет подключения, попробуйте позже');
 		}
 	}
 }
