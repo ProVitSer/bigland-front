@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, tap } from 'rxjs';
-import { environment } from 'src/environments/environment';
+
 import { NotificationService } from '../notifications/notification.service';
 import { errorNotification } from '../../helpers/error-notification.helper';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export abstract class ApiService<T> {

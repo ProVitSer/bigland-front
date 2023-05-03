@@ -1,4 +1,4 @@
-import { Jwt } from '@models/security';
+import { Jwt } from 'app/models/security';
 import * as CryptoJS from 'crypto-js';
 
 export class StorageService {
@@ -20,6 +20,9 @@ export class StorageService {
 
 	public getCurrentUser(): Jwt {
 		const local = localStorage.getItem(this.ITEM_KEY);
+		console.log(local);
+		console.log(this.decrypt(local));
+
 		return local ? JSON.parse(this.decrypt(local)) : local;
 	}
 

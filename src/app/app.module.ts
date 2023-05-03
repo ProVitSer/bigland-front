@@ -1,26 +1,26 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app-routing.module';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app.routing';
+import { ComponentsModule } from './components/components.module';
+import { AppComponent } from './app.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { MaterialModule } from './material/material.module';
-import { LoginPageComponent } from './components/security/login-page/login-page.component';
-import { SharedModule } from './shared/shared.module';
-import { DashboardComponent } from './layout/dashboard/dashboard.component';
 
 @NgModule({
-	declarations: [AppComponent, LoginPageComponent, DashboardComponent],
 	imports: [
-		BrowserModule,
-		AppRoutingModule,
 		BrowserAnimationsModule,
+		FormsModule,
+		ReactiveFormsModule,
 		HttpClientModule,
+		ComponentsModule,
+		RouterModule,
+		AppRoutingModule,
 		MaterialModule,
-		SharedModule,
-		SweetAlert2Module.forRoot(),
 	],
+	declarations: [AppComponent, AdminLayoutComponent],
 	providers: [],
 	bootstrap: [AppComponent],
 })

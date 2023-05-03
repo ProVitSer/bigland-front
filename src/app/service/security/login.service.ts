@@ -3,9 +3,9 @@ import { StorageService } from './storage.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
-import { Jwt, LoginData } from '@models/security';
-import { BaseApiResponseStruct } from '@models/base/base-api-response';
+import { BaseApiResponseStruct } from 'app/models/base/base-api-response';
+import { LoginData, Jwt } from 'app/models/security';
+import { environment } from 'environments/environment';
 
 @Injectable({
 	providedIn: 'root',
