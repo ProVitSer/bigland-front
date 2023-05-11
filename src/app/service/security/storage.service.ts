@@ -1,12 +1,12 @@
-import { Jwt } from 'app/models/security';
 import * as CryptoJS from 'crypto-js';
+import { environment } from 'environments/environment';
 
 export class StorageService {
-	private readonly SECRET_KEY = 'So78$hkas';
-	private readonly ITEM_KEY = 'currentUser';
+	private readonly SECRET_KEY: string;
 
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	constructor() {}
+	constructor() {
+		this.SECRET_KEY = environment.SECRET_KEY;
+	}
 
 	public encrypt(data: string): string {
 		const encryptData = CryptoJS.AES.encrypt(data, this.SECRET_KEY).toString();
@@ -18,15 +18,18 @@ export class StorageService {
 		return decryptData;
 	}
 
-	public getCurrentUser(): Jwt {
-		const local = localStorage.getItem(this.ITEM_KEY);
-		console.log(local);
-		console.log(this.decrypt(local));
-
-		return local ? JSON.parse(this.decrypt(local)) : local;
+	public saveData(key: string, value: string) {
+		localStorage.setItem(key, this.encrypt(value));
 	}
 
-	public setCurrentUser(data: string): void {
-		localStorage.setItem(this.ITEM_KEY, this.encrypt(data));
+	public getData(key: string) {
+		const data = localStorage.getItem(key) || '';
+		return this.decrypt(data);
+	}
+	public removeData(key: string) {
+		localStorage.removeItem(key);
+	}
+	public clearData() {
+		localStorage.clear();
 	}
 }
