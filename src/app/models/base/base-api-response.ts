@@ -4,7 +4,7 @@ export interface BaseApiResponseStruct<T> {
 	statusCode: HttpStatusCode;
 	result: boolean;
 	data: T;
-	error?: { [key: string]: any };
+	error?: Record<string, any>;
 	path: string;
 	timestamp: string;
 	createdBy: string;
