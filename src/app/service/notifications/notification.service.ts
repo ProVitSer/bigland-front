@@ -11,27 +11,30 @@ export class NotificationService {
 		this.defaultTime = 3500;
 	}
 
-	swalError(message: string, title = ''): void {
+	swalError(message: string, title = '', timer = 10000): void {
 		Swal.fire({
 			icon: 'error',
 			title,
 			text: message,
+			timer,
 		});
 	}
 
-	swalSuccess(message: string, title = ''): void {
+	swalSuccess(message: string, title = '', timer = 2000): void {
 		Swal.fire({
 			icon: 'success',
 			title,
 			text: message,
+			timer,
 		});
 	}
 
-	swalWarning(message: string, title = ''): void {
+	swalWarning(message: string, title = '', timer = 10000): void {
 		Swal.fire({
 			icon: 'warning',
 			title,
 			text: message,
+			timer,
 		});
 	}
 
