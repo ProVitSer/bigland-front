@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from 'app/service/notifications/notification.service';
-import { LoginService } from 'app/service/security';
+import { AuthService, LoginService } from 'app/service/security';
 
 @Component({
 	selector: 'app-login',
@@ -13,12 +13,14 @@ export class LoginPageComponent implements OnInit {
 	loginForm: FormGroup;
 	loading = false;
 	returnUrl: string;
+
 	constructor(
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private route: ActivatedRoute,
 		private notificationService: NotificationService,
 		private loginService: LoginService,
+		private auth: AuthService,
 	) {
 		this.loginForm = this.formBuilder.group({
 			email: ['', Validators.required],
@@ -27,7 +29,9 @@ export class LoginPageComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+		if(this.auth.loggedIn()){
+			this.router.navigate(['/dashboard']);
+		}
 	}
 
 	login(): void {
@@ -35,7 +39,6 @@ export class LoginPageComponent implements OnInit {
 			this.loading = true;
 			this.loginService.login(this.loginForm.value).subscribe({
 				next: () => this.onLoginSuccess(),
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				error: (e: any) => this.onLoginFail(e),
 			});
 		} else {
@@ -50,7 +53,6 @@ export class LoginPageComponent implements OnInit {
 		});
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	private onLoginFail(error: any): void {
 		this.loading = false;
 		if (error.status === undefined) {
